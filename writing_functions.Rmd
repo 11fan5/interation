@@ -1,0 +1,74 @@
+---
+title: "Iteration"
+author: "Yifan Shi"
+date: "2024-10-24"
+output: github_document
+---
+```{r set up, include=FALSE}
+library(tidyverse)
+library(rvest)
+
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Write my first function
+
+z-score computation
+```{r}
+x_vec = rnorm(n = 25, mean = 10, sd = 3.5)
+
+(x_vec - mean(x_vec)) / sd(x_vec)
+```
+
+now i will write a function to do this; also put conditional execution
+```{r}
+z_scores = function(x) {
+  
+  if(!is.numeric(x)){
+    stop("x needs to be numeric")
+  }
+  
+  if(length(x) < 5){
+    stop("you need at least five numbers to compute the z score")
+  }
+  
+  z = (x - mean(x)) / sd(x)
+  
+  return(z)
+  
+}
+
+z_scores(x = x_vec)
+```
+
+
+does this always work?
+
+```{r, error = TRUE}
+z_scores(x = 3)
+z_scores(x = c("my", "name", "is", "jeff"))
+
+z_scores(x = x_vec)
+```
+
+
